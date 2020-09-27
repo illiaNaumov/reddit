@@ -2,7 +2,7 @@ package com.naumov.reddit.di
 
 import com.naumov.reddit.data.PostRepositoryImpl
 import com.naumov.reddit.data.PostResponseMapper
-import com.naumov.reddit.domain.GetPostsUseCase
+import com.naumov.reddit.data.RedditPagingSource
 import com.naumov.reddit.domain.PostRepository
 import com.naumov.reddit.presentation.MainViewModel
 import org.koin.android.viewmodel.dsl.viewModel
@@ -18,15 +18,15 @@ val appModule = module {
         )
     } bind PostRepository::class
 
-    factory {
-        GetPostsUseCase(
+    single {
+        RedditPagingSource(
             postRepository = get()
         )
     }
 
     viewModel {
         MainViewModel(
-            getPostsUseCase = get()
+            redditPagingSource = get()
         )
     }
 }

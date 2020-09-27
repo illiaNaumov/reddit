@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.naumov.reddit.R
 import com.naumov.reddit.domain.model.Post
 import com.squareup.picasso.Picasso
 
-class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
-
-    val posts: MutableList<Post> = mutableListOf()
+class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -21,11 +21,8 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        return holder.bind(posts[position])
-    }
-
-    override fun getItemCount(): Int {
-        return posts.size
+        val item = getItem(position) ?: return
+        return holder.bind(item)
     }
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -45,5 +42,15 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
                 .load(post.thumbnail)
                 .into(thumbnail)
         }
+    }
+}
+
+object PostComparator : DiffUtil.ItemCallback<Post>() {
+    override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+        return oldItem == newItem
     }
 }

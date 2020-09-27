@@ -9,8 +9,8 @@ import java.util.*
 class PostResponseMapper {
     fun map(response: ListingResponse): Listing {
         return Listing(
-            limit = response.limit,
-            posts = mapPosts(response.posts)
+            posts = mapPosts(response.posts),
+            after = response.after
         )
     }
 
