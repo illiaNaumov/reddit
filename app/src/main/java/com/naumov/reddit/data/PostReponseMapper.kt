@@ -22,7 +22,8 @@ class PostResponseMapper {
                 title = postResponse.title,
                 author = postResponse.author,
                 date = formatCreationDate(postResponse.createdSec),
-                url = postResponse.url
+                thumbnail = postResponse.url,
+                commentCount = postResponse.commentCount
             )
         }
     }
