@@ -1,4 +1,4 @@
-package com.naumov.reddit.presentation
+package com.naumov.reddit.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.naumov.reddit.R
 import com.naumov.reddit.domain.model.Post
 import com.squareup.picasso.Picasso
 
-class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostComparator) {
+class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiffUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -32,7 +31,6 @@ class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostComp
         private val thumbnail: ImageView = view.findViewById(R.id.thumbnailView)
         private val commentCount: TextView = view.findViewById(R.id.commentsCountView)
 
-
         fun bind(post: Post) {
             info.text = post.author
             title.text = post.title
@@ -42,15 +40,5 @@ class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostComp
                 .load(post.thumbnail)
                 .into(thumbnail)
         }
-    }
-}
-
-object PostComparator : DiffUtil.ItemCallback<Post>() {
-    override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-        return oldItem == newItem
     }
 }
