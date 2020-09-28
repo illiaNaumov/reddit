@@ -8,6 +8,7 @@ import androidx.paging.LoadState
 import com.naumov.reddit.R
 import com.naumov.reddit.presentation.adapter.PostAdapter
 import com.naumov.reddit.presentation.adapter.PostLoadStateAdapter
+import com.naumov.reddit.presentation.util.toggleVisibility
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -51,8 +52,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-}
-
-fun View.toggleVisibility(isVisible: Boolean) {
-    this.visibility = if (isVisible) View.VISIBLE else View.GONE
 }

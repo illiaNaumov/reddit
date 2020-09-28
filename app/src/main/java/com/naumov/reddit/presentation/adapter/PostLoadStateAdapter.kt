@@ -9,7 +9,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.naumov.reddit.R
-import com.naumov.reddit.presentation.toggleVisibility
+import com.naumov.reddit.presentation.util.toggleVisibility
 
 class PostLoadStateAdapter(
     private val retry: () -> Unit

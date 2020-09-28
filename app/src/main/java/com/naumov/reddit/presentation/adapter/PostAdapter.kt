@@ -9,13 +9,14 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.naumov.reddit.R
 import com.naumov.reddit.domain.model.Post
+import com.naumov.reddit.presentation.util.toggleVisibility
 import com.squareup.picasso.Picasso
 
 class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiffUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_post, parent, false)
+            .inflate(R.layout.item_vertical_post, parent, false)
         return PostViewHolder(view)
     }
 
@@ -36,9 +37,14 @@ class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiff
             title.text = post.title
             commentCount.text = post.commentCount.toString()
 
-            Picasso.get()
-                .load(post.thumbnail)
-                .into(thumbnail)
+            val preview = post.preview?.url
+            thumbnail.toggleVisibility(preview != null)
+            preview?.let {
+                Picasso.get()
+                    .load(it)
+                    .placeholder(R.drawable.ic_placeholder)
+                    .into(thumbnail)
+            }
         }
     }
 }

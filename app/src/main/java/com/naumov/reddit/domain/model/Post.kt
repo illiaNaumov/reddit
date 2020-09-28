@@ -8,5 +8,6 @@ data class Post(
     val author: String,
     val date: Date,
     val thumbnail: String,
-    val commentCount: Int
+    val commentCount: Int,
+    val preview: Preview?
 )

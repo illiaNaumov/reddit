@@ -2,8 +2,11 @@ package com.naumov.reddit.data
 
 import com.naumov.reddit.data.response.ListingResponse
 import com.naumov.reddit.data.response.PostWrapperResponse
+import com.naumov.reddit.data.response.PreviewResponse
 import com.naumov.reddit.domain.model.Listing
 import com.naumov.reddit.domain.model.Post
+import com.naumov.reddit.domain.model.Preview
+import java.net.URLDecoder
 import java.util.*
 
 class PostResponseMapper {
@@ -23,9 +26,20 @@ class PostResponseMapper {
                 author = postResponse.author,
                 date = formatCreationDate(postResponse.createdSec),
                 thumbnail = postResponse.url,
-                commentCount = postResponse.commentCount
+                commentCount = postResponse.commentCount,
+                preview = postResponse.preview?.let { mapPreview(it) }
             )
         }
+    }
+
+    private fun mapPreview(previewResponse: PreviewResponse): Preview {
+        val imageSource = previewResponse.images.first().source
+        val decodedPreviewUrl = imageSource.url.replace("&amp;", "&")// URLDecoder.decode(imageSource.url, "UTF-8")
+        return Preview(
+            url = decodedPreviewUrl,
+            width = imageSource.width,
+            height = imageSource.height
+        )
     }
 
     private fun formatCreationDate(time: Double): Date {
