@@ -27,10 +27,13 @@
         android:lines="1"
         tools:text="matts41 - 2 hours ago" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/thumbnailView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription"
         tools:src="@drawable/ic_launcher_background" />

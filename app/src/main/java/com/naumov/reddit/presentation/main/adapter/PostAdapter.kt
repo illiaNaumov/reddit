@@ -1,4 +1,4 @@
-package com.naumov.reddit.presentation.adapter
+package com.naumov.reddit.presentation.main.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +12,9 @@ import com.naumov.reddit.domain.model.Post
 import com.naumov.reddit.presentation.util.toggleVisibility
 import com.squareup.picasso.Picasso
 
-class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiffUtilCallback()) {
+class PostAdapter(
+    private val onClick: (Post) -> Unit
+) : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiffUtilCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -22,7 +24,7 @@ class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiff
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val item = getItem(position) ?: return
-        return holder.bind(item)
+        return holder.bind(item, onClick)
     }
 
     class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -32,14 +34,16 @@ class PostAdapter : PagingDataAdapter<Post, PostAdapter.PostViewHolder>(PostDiff
         private val thumbnail: ImageView = view.findViewById(R.id.thumbnailView)
         private val commentCount: TextView = view.findViewById(R.id.commentsCountView)
 
-        fun bind(post: Post) {
+        fun bind(post: Post, onClick: (Post) -> Unit) {
             info.text = post.author
             title.text = post.title
             commentCount.text = post.commentCount.toString()
 
             val preview = post.preview?.url
             thumbnail.toggleVisibility(preview != null)
+
             preview?.let {
+                thumbnail.setOnClickListener { onClick(post) }
                 Picasso.get()
                     .load(it)
                     .placeholder(R.drawable.ic_placeholder)

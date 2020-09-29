@@ -1,13 +1,13 @@
-package com.naumov.reddit.presentation
+package com.naumov.reddit.presentation.main
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.naumov.reddit.R
-import com.naumov.reddit.presentation.adapter.PostAdapter
-import com.naumov.reddit.presentation.adapter.PostLoadStateAdapter
+import com.naumov.reddit.domain.model.Post
+import com.naumov.reddit.presentation.main.adapter.PostAdapter
+import com.naumov.reddit.presentation.main.adapter.PostLoadStateAdapter
 import com.naumov.reddit.presentation.util.toggleVisibility
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.flow.collectLatest
@@ -17,7 +17,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModel()
-    private val postsAdapter = PostAdapter()
+    private val postsAdapter = PostAdapter(::onPostClicked)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,5 +51,9 @@ class MainActivity : AppCompatActivity() {
                 retryView.toggleVisibility(loadState.refresh is LoadState.Error)
             }
         }
+    }
+
+    private fun onPostClicked(post: Post) {
+        //TODO handle poster click
     }
 }

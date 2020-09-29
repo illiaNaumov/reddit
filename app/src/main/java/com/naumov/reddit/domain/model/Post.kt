@@ -7,7 +7,8 @@ data class Post(
     val title: String,
     val author: String,
     val date: Date,
-    val thumbnail: String,
+    val url: String,
     val commentCount: Int,
-    val preview: Preview?
+    val thumbnail: String,
+    val preview: Preview?,
 )

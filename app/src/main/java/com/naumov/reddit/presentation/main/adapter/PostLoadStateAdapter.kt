@@ -1,4 +1,4 @@
-package com.naumov.reddit.presentation.adapter
+package com.naumov.reddit.presentation.main.adapter
 
 import android.view.LayoutInflater
 import android.view.View

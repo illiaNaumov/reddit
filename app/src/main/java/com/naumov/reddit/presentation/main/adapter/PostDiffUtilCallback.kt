@@ -1,4 +1,4 @@
-package com.naumov.reddit.presentation.adapter
+package com.naumov.reddit.presentation.main.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.naumov.reddit.domain.model.Post

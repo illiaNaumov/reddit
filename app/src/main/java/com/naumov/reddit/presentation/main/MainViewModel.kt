@@ -1,4 +1,4 @@
-package com.naumov.reddit.presentation
+package com.naumov.reddit.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.paging.Pager

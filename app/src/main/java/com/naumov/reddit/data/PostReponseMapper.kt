@@ -6,7 +6,6 @@ import com.naumov.reddit.data.response.PreviewResponse
 import com.naumov.reddit.domain.model.Listing
 import com.naumov.reddit.domain.model.Post
 import com.naumov.reddit.domain.model.Preview
-import java.net.URLDecoder
 import java.util.*
 
 class PostResponseMapper {
@@ -25,16 +24,18 @@ class PostResponseMapper {
                 title = postResponse.title,
                 author = postResponse.author,
                 date = formatCreationDate(postResponse.createdSec),
-                thumbnail = postResponse.url,
+                url = postResponse.url,
                 commentCount = postResponse.commentCount,
-                preview = postResponse.preview?.let { mapPreview(it) }
+                preview = postResponse.preview?.let { mapPreview(it) },
+                thumbnail = postResponse.thumbnail
             )
         }
     }
 
     private fun mapPreview(previewResponse: PreviewResponse): Preview {
         val imageSource = previewResponse.images.first().source
-        val decodedPreviewUrl = imageSource.url.replace("&amp;", "&")// URLDecoder.decode(imageSource.url, "UTF-8")
+        val decodedPreviewUrl =
+            imageSource.url.replace("&amp;", "&")
         return Preview(
             url = decodedPreviewUrl,
             width = imageSource.width,
